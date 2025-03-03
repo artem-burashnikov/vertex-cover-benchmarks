@@ -40,9 +40,10 @@ if __name__ == "__main__":
 
     # All algorithms to be benched.
     algorithms = {
-        "Edmonds": algorithms.approx_edmonds_nx,
-        "Greedy": algorithms.approx_nx,
-        "2-approx": algorithms.approx2_nx,
+        "edmonds_nx": algorithms.edmonds_nx,
+        "greedy_mvc_nx": algorithms.greedy_mvc_nx,
+        "approx2_nx": algorithms.approx2_nx,
+        "greedy": algorithms.greedy_mvc,
     }
 
     # Run benchmarks.

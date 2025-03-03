@@ -16,7 +16,7 @@ def timer(f):
 
 # MVC approximation by max degree using NetworkX methods and properties.
 @timer
-def approx_nx(g):
+def greedy_mvc_nx(g):
     vertex_cover = set()
 
     # Untill there are no edges left.
@@ -34,39 +34,46 @@ def approx_nx(g):
 
 
 # MVC approximation by Anosov Pavel
-class DataCleaner:
-    def __init__(self, violations):
-        self.graph = defaultdict(list)
-        for v1, v2 in violations:
-            if v1 != v2:
-                self.graph[v1].append(v2)
-                self.graph[v2].append(v1)
-            else:
-                self.graph[v1].append(v1)
-        self.nodes = list(self.graph.keys())
-        self.removed_nodes = []
+def greedy_mvc(g):
+    # Untimed setup
+    graph = defaultdict(list)
 
-    def __remove_highest_degree_node(self):
-        max_key = max(self.graph.items(), key=lambda x: len(x[1]))[0]
-        for neighbour in self.graph[max_key]:
-            self.graph[neighbour].remove(max_key)
-        del self.graph[max_key]
-        self.nodes.remove(max_key)
-        self.removed_nodes.append(max_key)
+    for v1, v2 in g.edges:
+        if v1 != v2:
+            graph[v1].append(v2)
+            graph[v2].append(v1)
+        else:
+            graph[v1].append(v1)
 
-    def __has_edges(self) -> bool:
-        return any(self.graph[node] for node in self.graph)
+    nodes = list(graph.keys())
+
+    vertex_cover = []
 
     @timer
-    def clean(self) -> None:
-        while self.__has_edges():
-            self.__remove_highest_degree_node()
-        return self.removed_nodes
+    def clean():
+
+        def _remove_highest_degree_node():
+            max_key = max(graph.items(), key=lambda x: len(x[1]))[0]
+            for neighbour in graph[max_key]:
+                graph[neighbour].remove(max_key)
+            del graph[max_key]
+            nodes.remove(max_key)
+            vertex_cover.append(max_key)
+
+        def _has_edges():
+            return any(graph[node] for node in graph)
+
+        while _has_edges():
+            _remove_highest_degree_node()
+
+    clean()
+
+    return vertex_cover
 
 
 # MVC approximation by exact max matching using NetworkX Edmonds algorithm.
 @timer
-def approx_edmonds_nx(g):
+def edmonds_nx(g):
     vertex_cover = set()
     max_matching = nx.max_weight_matching(g, maxcardinality=True)
     for u, v in max_matching:
