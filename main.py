@@ -1,6 +1,7 @@
 import networkx as nx
 from pathlib import Path
 import algorithms
+import datetime
 
 BENCH_TIMES = 50
 
@@ -24,9 +25,11 @@ def bench(algos, graph, count, data_name: Path):
 
         # Write the bench data in file
         with open(file_path, "a") as file:
+            file.write(f"{graph.number_of_nodes()},{graph.number_of_edges()}\n")
+
             for i in range(count):
 
-                print(f"Round #{i+1}")
+                print(f"{datetime.datetime.now()}: Round #{i+1}")
 
                 # Copy graph so many runs are possible.
                 graph_copy = nx.Graph.copy(graph)
@@ -38,7 +41,7 @@ def bench(algos, graph, count, data_name: Path):
                 elapsed, result, _ = algo(graph_copy)
 
                 # Note the measured time.
-                file.write("{:.15f}\n".format(elapsed))
+                file.write(f"{elapsed:.15f},{len(result)}\n")
 
         print(f"Done.")
 
@@ -47,8 +50,6 @@ def bench(algos, graph, count, data_name: Path):
 if __name__ == "__main__":
     # All datasets.
     datasets = [p for p in Path(Path.cwd() / "datasets").iterdir() if p.suffix == ".txt"]
-    print(datasets)
-    input()
 
     # All algorithms to be benched.
     algorithms = {
