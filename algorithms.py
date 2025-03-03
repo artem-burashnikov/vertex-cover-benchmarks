@@ -33,9 +33,9 @@ def greedy_mvc_nx(g):
     return vertex_cover
 
 
-# MVC approximation by Anosov Pavel
+# MVC approximation by Pavel Anosov
+@timer
 def greedy_mvc(g):
-    # Untimed setup
     graph = defaultdict(list)
 
     for v1, v2 in g.edges:
@@ -49,7 +49,6 @@ def greedy_mvc(g):
 
     vertex_cover = []
 
-    @timer
     def clean():
 
         def _remove_highest_degree_node():

@@ -2,7 +2,7 @@ import networkx as nx
 from pathlib import Path
 import algorithms
 
-BENCH_TIMES = 40
+BENCH_TIMES = 50
 
 
 # Load dataset into a memory.
@@ -15,28 +15,40 @@ def load_data(file_path: Path):
 
 
 # Benchmarking loop. Runs count times.
-def bench(algorithms, graph, count):
+def bench(algos, graph, count, data_name: Path):
     # For all algorithms...
-    for algo_name, algo in algorithms.items():
-        file_path = Path.cwd() / f"{algo_name}_benchmarks"
+    for algo_name, algo in algos.items():
+        file_path = Path.cwd() / f"{algo_name}_benchmarks-{data_name.name}"
+
         print(f"Running benchmark of {algo_name}")
+
         # Write the bench data in file
         with open(file_path, "a") as file:
             for i in range(count):
+
                 print(f"Round #{i+1}")
+
                 # Copy graph so many runs are possible.
                 graph_copy = nx.Graph.copy(graph)
+
+                # Remove selfloops.
+                graph_copy.remove_edges_from(nx.selfloop_edges(graph_copy))
+
                 # Only this call is timed
                 elapsed, result, _ = algo(graph_copy)
+
                 # Note the measured time.
                 file.write("{:.15f}\n".format(elapsed))
+
         print(f"Done.")
 
 
 # Driver code.
 if __name__ == "__main__":
     # All datasets.
-    datasets = [x.absolute().resolve() for x in Path("datasets/").iterdir()]
+    datasets = [p for p in Path(Path.cwd() / "datasets").iterdir() if p.suffix == ".txt"]
+    print(datasets)
+    input()
 
     # All algorithms to be benched.
     algorithms = {
@@ -49,4 +61,4 @@ if __name__ == "__main__":
     # Run benchmarks.
     for data in datasets:
         graph = load_data(data)
-        bench(algorithms, graph, BENCH_TIMES)
+        bench(algorithms, graph, BENCH_TIMES, data)
