@@ -46,15 +46,17 @@ def bench(algos, graph, count, data_name: Path):
 # Driver code.
 if __name__ == "__main__":
     # All datasets.
-    # datasets = [p for p in Path(Path.cwd() / "datasets").iterdir() if p.suffix == ".txt"]
-    datasets = [Path("datasets/ca-HepPh.txt")]
+    datasets = [
+        p for p in Path(Path.cwd() / "datasets").iterdir() if p.suffix == ".txt"
+    ]
+
     # All algorithms to be benched.
     algorithms = {
-        # "edmonds_nx": algorithms.edmonds_nx,
-        # "greedy_mvc_nx": algorithms.greedy_mvc_nx,
-        # "approx2_nx": algorithms.approx2_nx,
-        # "greedy": algorithms.greedy_mvc,
-        # "mtm": algorithms.mtm,
+        "edmonds_nx": algorithms.edmonds_nx,
+        "greedy_mvc_nx": algorithms.greedy_mvc_nx,
+        "approx2_nx": algorithms.approx2_nx,
+        "greedy": algorithms.greedy_mvc,
+        "mtm": algorithms.mtm,
     }
 
     # Run benchmarks.

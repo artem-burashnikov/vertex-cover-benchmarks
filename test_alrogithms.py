@@ -3,7 +3,7 @@ import networkx as nx
 from pathlib import Path
 import algorithms
 
-# Путь к тестовым датасетам
+# Path to datasets directory containing text files.
 DATASET_PATH = Path("datasets")
 
 
@@ -28,12 +28,10 @@ dataset_files = [p for p in DATASET_PATH.iterdir() if p.suffix == ".txt"]
     ],
 )
 def test_vertex_cover(dataset_file, algo_name, algo):
-    """Проверяет, что алгоритмы действительно возвращают вершинное покрытие."""
+    """Check that a given algorithm returns a set cover."""
     graph = load_graph(dataset_file)
 
-    # Копируем граф перед тестом, чтобы алгоритмы его не изменяли
     graph_copy = graph.copy()
     _, result, _ = algo(graph_copy)
 
-    # Проверяем, является ли результат вершинным покрытием
-    assert algorithms.isVertexCover(graph, result), f"{algo_name} не покрыл все рёбра!"
+    assert algorithms.isVertexCover(graph, result), f"{algo_name} has not covered all edges."
