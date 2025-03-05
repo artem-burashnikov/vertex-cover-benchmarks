@@ -34,9 +34,6 @@ def bench(algos, graph, count, data_name: Path):
                 # Copy graph so many runs are possible.
                 graph_copy = nx.Graph.copy(graph)
 
-                # Remove selfloops.
-                graph_copy.remove_edges_from(nx.selfloop_edges(graph_copy))
-
                 # Only this call is timed
                 elapsed, result, _ = algo(graph_copy)
 
@@ -49,17 +46,20 @@ def bench(algos, graph, count, data_name: Path):
 # Driver code.
 if __name__ == "__main__":
     # All datasets.
-    datasets = [p for p in Path(Path.cwd() / "datasets").iterdir() if p.suffix == ".txt"]
-
+    # datasets = [p for p in Path(Path.cwd() / "datasets").iterdir() if p.suffix == ".txt"]
+    datasets = [Path("datasets/ca-HepPh.txt")]
     # All algorithms to be benched.
     algorithms = {
-        "edmonds_nx": algorithms.edmonds_nx,
-        "greedy_mvc_nx": algorithms.greedy_mvc_nx,
-        "approx2_nx": algorithms.approx2_nx,
-        "greedy": algorithms.greedy_mvc,
+        # "edmonds_nx": algorithms.edmonds_nx,
+        # "greedy_mvc_nx": algorithms.greedy_mvc_nx,
+        # "approx2_nx": algorithms.approx2_nx,
+        # "greedy": algorithms.greedy_mvc,
+        # "mtm": algorithms.mtm,
     }
 
     # Run benchmarks.
     for data in datasets:
         graph = load_data(data)
+        # Remove selfloops.
+        graph.remove_edges_from(nx.selfloop_edges(graph))
         bench(algorithms, graph, BENCH_TIMES, data)
