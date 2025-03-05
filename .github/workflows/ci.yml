@@ -1,0 +1,34 @@
+name: CI
+
+on: [push]
+
+jobs:
+  ci:
+    strategy:
+      matrix:
+          os: [ubuntu-latest, windows-latest, macOS-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.13.x
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Check formatting with black
+        run: |
+          black --diff --check $(git ls-files '*.py')
+
+      - name: Ruff linter
+        run: |
+          ruff check --select=Q,W,E,R,I,A,F,G,C,B,N,RUF100 $(git ls-files '*.py')
+
+      - name: Run tests
+        run: |
+          pytest -sxv

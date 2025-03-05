@@ -1,7 +1,9 @@
-import networkx as nx
-from pathlib import Path
-import algorithms
 import datetime
+from pathlib import Path
+
+import networkx as nx
+
+import algorithms
 
 BENCH_TIMES = 50
 
@@ -40,7 +42,7 @@ def bench(algos, graph, count, data_name: Path):
                 # Note the measured time.
                 file.write(f"{elapsed:.15f},{len(result)}\n")
 
-        print(f"Done.")
+        print("Done.")
 
 
 # Driver code.

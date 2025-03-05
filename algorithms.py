@@ -1,7 +1,8 @@
-import networkx as nx
+import itertools
 import time
 from collections import defaultdict
-import itertools
+
+import networkx as nx
 
 
 # Timer wrapper fo measuring a CPU time of a function execution.
@@ -15,7 +16,7 @@ def timer(f):
     return wrapper
 
 
-def isVertexCover(graph: nx.Graph, cover: set) -> bool:
+def is_vertex_cover(graph: nx.Graph, cover: set) -> bool:
     # Check if edge is covered
     for u, v in graph.edges():
         if u not in cover and v not in cover:
@@ -130,7 +131,7 @@ def brute_force_mvc(graph: nx.Graph):
 
     for r in range(1, len(nodes) + 1):
         for subset in itertools.combinations(nodes, r):
-            if isVertexCover(graph, set(subset)):
+            if is_vertex_cover(graph, set(subset)):
                 return set(subset)
 
     return set()

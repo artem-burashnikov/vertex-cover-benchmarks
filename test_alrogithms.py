@@ -1,6 +1,8 @@
-import pytest
-import networkx as nx
 from pathlib import Path
+
+import networkx as nx
+import pytest
+
 import algorithms
 
 # Path to datasets directory containing text files.
@@ -34,4 +36,5 @@ def test_vertex_cover(dataset_file, algo_name, algo):
     graph_copy = graph.copy()
     _, result, _ = algo(graph_copy)
 
-    assert algorithms.isVertexCover(graph, result), f"{algo_name} has not covered all edges."
+    fail_message = f"{algo_name} has not covered all edges."
+    assert algorithms.is_vertex_cover(graph, result), fail_message

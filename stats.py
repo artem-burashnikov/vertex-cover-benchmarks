@@ -1,11 +1,12 @@
-from scipy import stats
-import matplotlib.pyplot as plt
-from pathlib import Path
 import sys
+from pathlib import Path
+
+import matplotlib.pyplot as plt
+from scipy import stats
 
 
 def check_stats(file_path: Path):
-    with open(file_path, "r") as file:
+    with open(file_path) as file:
         t = [float(line.split()[0]) for line in file]
 
         print(f"NormalTest p-value: {stats.normaltest(t)[1]}")
