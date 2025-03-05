@@ -125,6 +125,7 @@ def mtm(g: nx.Graph):
     return vertex_cover
 
 
+@timer
 def brute_force_mvc(graph: nx.Graph):
     """Exponential brute force MVC algorithm."""
     nodes = list(graph.nodes)

@@ -2,20 +2,26 @@ from pathlib import Path
 
 import networkx as nx
 import pytest
+from scipy.io import mmread
 
 import algorithms
 
-# Path to datasets directory containing text files.
+# Path to datasets directory containing datasets.
 DATASET_PATH = Path("datasets")
 
 
-def load_graph(file_path: Path):
-    g = nx.read_edgelist(file_path, comments="#")
-    g.remove_edges_from(nx.selfloop_edges(g))
-    return g
+def load_graph_from_txt(file_path: Path):
+    return nx.read_edgelist(file_path, comments="#")
 
 
-dataset_files = [p for p in DATASET_PATH.iterdir() if p.suffix == ".txt"]
+# Load matrix market dataset into a memory.
+def load_graph_from_mtx(file_path: Path):
+    return nx.Graph(mmread(file_path))
+
+
+dataset_files = [
+    p for p in DATASET_PATH.iterdir() if p.suffix == ".txt" or p.suffix == ".mtx"
+]
 
 
 @pytest.mark.parametrize("dataset_file", dataset_files)
@@ -29,9 +35,15 @@ dataset_files = [p for p in DATASET_PATH.iterdir() if p.suffix == ".txt"]
         ("mtm", algorithms.mtm),
     ],
 )
-def test_vertex_cover(dataset_file, algo_name, algo):
+def test_vertex_cover(dataset_file: Path, algo_name, algo):
     """Check that a given algorithm returns a set cover."""
-    graph = load_graph(dataset_file)
+    graph = (
+        load_graph_from_txt(dataset_file)
+        if dataset_file.suffix == ".txt"
+        else load_graph_from_mtx(dataset_file)
+    )
+
+    graph.remove_edges_from(nx.selfloop_edges(graph))
 
     graph_copy = graph.copy()
     _, result, _ = algo(graph_copy)
