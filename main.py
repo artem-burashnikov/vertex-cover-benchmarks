@@ -8,7 +8,7 @@ import algorithms
 
 BENCH_TIMES = 50
 
-BRUTE_FORCE = "naive_brute_force"
+BRUTE_FORCE = "naiveBruteForce"
 
 
 # Load matrix market dataset into a memory.
@@ -24,7 +24,6 @@ def load_text_data(file_path: Path):
     print(f"Loading dataset {file_path.name}")
     g = nx.read_edgelist(file_path, comments="#")
     print("Dataset has been loaded.")
-
     return g
 
 
@@ -71,12 +70,12 @@ if __name__ == "__main__":
 
     # All algorithms to be benched.
     algorithms = {
-        # "edmonds_nx": algorithms.edmonds_nx,
+        "edmonds": algorithms.edmonds_nx,
         # "greedy_mvc_nx": algorithms.greedy_mvc_nx,
-        # "approx2_nx": algorithms.approx2_nx,
-        # "greedy": algorithms.greedy_mvc,
-        # "mtm": algorithms.mtm,
-        "naive_brute_force": algorithms.brute_force_mvc
+        "greedy2": algorithms.approx2_nx,
+        "greedyPavel": algorithms.greedy_mvc,
+        "mtm": algorithms.mtm,
+        BRUTE_FORCE: algorithms.brute_force_mvc
     }
 
     # Run benchmarks on real graphs.

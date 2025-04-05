@@ -5,7 +5,7 @@ from collections import defaultdict
 import networkx as nx
 
 
-# Timer wrapper fo measuring a CPU time of a function execution.
+# Timer wrapper fo measuring CPU time of a function execution.
 def timer(f):
     def wrapper(*args, **kwargs):
         start = time.process_time()
@@ -16,6 +16,7 @@ def timer(f):
     return wrapper
 
 
+# Checks if a given set of vertices is vertex cover.
 def is_vertex_cover(graph: nx.Graph, cover: set) -> bool:
     # Check if edge is covered
     for u, v in graph.edges():
