@@ -75,7 +75,7 @@ if __name__ == "__main__":
         "greedy": algorithms.greedy,
         "two_approx": algorithms.two_approx,
         "mtm": algorithms.mtm,
-        BRUTE_FORCE: algorithms.brute_force
+        BRUTE_FORCE: algorithms.brute_force,
     }
 
     # Run benchmarks on real graphs.
