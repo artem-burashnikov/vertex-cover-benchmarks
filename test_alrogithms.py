@@ -28,10 +28,10 @@ dataset_files = [
 @pytest.mark.parametrize(
     "algo_name, algo",
     [
-        ("greedy_mvc_nx", algorithms.greedy_mvc_nx),
-        ("greedy_mvc", algorithms.greedy_mvc),
-        ("edmonds_nx", algorithms.edmonds_nx),
-        ("approx2_nx", algorithms.approx2_nx),
+        ("greedy_nx", algorithms.greedy_nx),
+        ("greedy", algorithms.greedy),
+        ("edmonds", algorithms.max_matching_edmonds),
+        ("2approx", algorithms.two_approx),
         ("mtm", algorithms.mtm),
     ],
 )

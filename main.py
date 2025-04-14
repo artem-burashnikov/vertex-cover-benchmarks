@@ -8,7 +8,7 @@ import algorithms
 
 BENCH_TIMES = 50
 
-BRUTE_FORCE = "naiveBruteForce"
+BRUTE_FORCE = "brute_force"
 
 
 # Load matrix market dataset into a memory.
@@ -70,12 +70,12 @@ if __name__ == "__main__":
 
     # All algorithms to be benched.
     algorithms = {
-        "edmonds": algorithms.edmonds_nx,
-        # "greedy_mvc_nx": algorithms.greedy_mvc_nx,
-        "greedy2": algorithms.approx2_nx,
-        "greedyPavel": algorithms.greedy_mvc,
+        # "max_matching_edmonds": algorithms.max_matching_edmonds,
+        "greedy_nx": algorithms.greedy_nx,
+        "greedy": algorithms.greedy,
+        "two_approx": algorithms.two_approx,
         "mtm": algorithms.mtm,
-        BRUTE_FORCE: algorithms.brute_force_mvc
+        BRUTE_FORCE: algorithms.brute_force
     }
 
     # Run benchmarks on real graphs.

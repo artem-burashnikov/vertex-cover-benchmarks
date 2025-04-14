@@ -16,8 +16,8 @@ def check_stats(file_path: Path):
         print(f"mean: {np.mean(t)}")
         print(f"ppf: {stats.t.ppf(0.975, df=len(t)-1)*stats.sem(t)}")
 
-        # plt.hist(t)
-        # plt.show()
+        plt.hist(t)
+        plt.show()
 
 
 def usage():

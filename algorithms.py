@@ -29,7 +29,7 @@ def is_vertex_cover(graph: nx.Graph, cover: set) -> bool:
 
 
 @timer
-def greedy_mvc_nx(g):
+def greedy_nx(g):
     """MVC approximation by max degree using NetworkX methods and properties."""
     vertex_cover = set()
 
@@ -48,7 +48,7 @@ def greedy_mvc_nx(g):
 
 
 @timer
-def greedy_mvc(g: nx.Graph):
+def greedy(g: nx.Graph):
     """Pavel Anosov's greedy MVC approximation algorithm."""
     vertex_cover = set()
 
@@ -65,7 +65,7 @@ def greedy_mvc(g: nx.Graph):
 
 
 @timer
-def edmonds_nx(g):
+def max_matching_edmonds(g):
     """MVC approximation by NetworkX Edmonds max matching algorithm."""
     vertex_cover = set()
     max_matching = nx.max_weight_matching(g, maxcardinality=True)
@@ -77,7 +77,7 @@ def edmonds_nx(g):
 
 
 @timer
-def approx2_nx(g):
+def two_approx(g):
     """MVC approximation by greedy max matching using NetworkX algorithm."""
     return nx.approximation.min_weighted_vertex_cover(g)
 
@@ -127,7 +127,7 @@ def mtm(g: nx.Graph):
 
 
 @timer
-def brute_force_mvc(graph: nx.Graph):
+def brute_force(graph: nx.Graph):
     """Exponential brute force MVC algorithm."""
     nodes = list(graph.nodes)
 
